@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import grey from '@material-ui/core/colors/grey';
-import axios from 'axios';
+
 import { ThemeProvider } from '@material-ui/core'
 import "animate.css/animate.min.css";
 import { createMuiTheme } from '@material-ui/core/styles'
@@ -70,9 +69,9 @@ const dark = {
 
 export default function Home({img}) {
   const classes = useStyles();
-  const [render,setRender] = useState("")
   
-const {theme, setTheme} = useStore()
+  
+const {theme} = useStore()
 
 
 // Icons imported from `@material-ui/icons`

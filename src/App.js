@@ -10,19 +10,20 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect,
+  
   useLocation,
-  useParams
+
 } from "react-router-dom";
 import Welcome from './components/Welcome';
 import Image from './components/Image';
 function App() {
   const [img, setImg] = useState("")
   
-  useEffect(async () => {
+  useEffect( () => {
+    async function a(){
     const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://salty-brook-11628.herokuapp.com/files`);
-    setImg(res.data)
+    setImg(res.data)}
+    a()
   },[])
 console.log(img)
   return (

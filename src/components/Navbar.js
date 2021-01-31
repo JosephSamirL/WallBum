@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
+
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -82,7 +82,7 @@ const appliedTheme = createMuiTheme(theme ? light : dark)
       <CssBaseline />
       <AppBar style={{backgroundColor:grey[theme? 0: 900],}} position="relative">
         <Toolbar>
-        {location.pathname != "/home"?<Link to="/home"><ArrowBackIosIcon style={{color:theme?"white":"pink", margin: 2}}/></Link>:""}
+        {location.pathname !== "/home"?<Link to="/home"><ArrowBackIosIcon style={{color:theme?"white":"pink", margin: 2}}/></Link>:""}
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
           W A L L B U M

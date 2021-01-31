@@ -1,6 +1,6 @@
-import React,{useState, useEffect} from 'react'
+import React from 'react'
 import {useParams} from "react-router-dom"
-import { Button, Card, CardContent, CardMedia, IconButton } from '@material-ui/core';
+import { Button, Card,  CardMedia } from '@material-ui/core';
 import GetAppRoundedIcon from '@material-ui/icons/GetAppRounded';
 import Navbar from './Navbar';
 import grey from '@material-ui/core/colors/grey';
