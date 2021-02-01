@@ -14,30 +14,49 @@ import {
   useLocation,
 
 } from "react-router-dom";
+import {useSearch} from "./state/searchState"
 import Welcome from './components/Welcome';
 import Image from './components/Image';
+import { useStore } from './state/state';
 function App() {
-  const [img, setImg] = useState("")
   
+  const {page, img, setImg}= useStore();
+ const{search} = useSearch();
   useEffect( () => {
     async function a(){
-    const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://salty-brook-11628.herokuapp.com/files`);
-    setImg(res.data)}
-    a()
-  },[])
+      axios.get(`https://api.unsplash.com/search/photos/?page=1&&query=${search}`, {
+        headers: {
+          Authorization: 'Client-ID '+'AcV32JsGG4T0ovNLHiiTcL0eb8MNOd2rzV2zEQFdDSk'
+        }
+       }).then(res=>{setImg(res.data.results)})
+
+       }
+       return a()
+  },[search])
+  useEffect( () => {
+    async function a(){
+      axios.get(`https://api.unsplash.com/search/photos/?page=1&&query=${page}${search}`, {
+        headers: {
+          Authorization: 'Client-ID '+'AcV32JsGG4T0ovNLHiiTcL0eb8MNOd2rzV2zEQFdDSk'
+        }
+       }).then(res=>{setImg(img.concat(res.data.results))})
+
+       }
+       return a()
+  },[page])
 console.log(img)
   return (
     
     <Router>
       <Switch>
-      <AnimationApp img={img}/>
+      <AnimationApp />
       </Switch>
     </Router>
 
   );
 }
 
-function AnimationApp({img}) {
+function AnimationApp() {
   let location = useLocation();
 
   return (
@@ -59,7 +78,7 @@ function AnimationApp({img}) {
           >
             <Switch location={location}>
               <Route exact path="/" component={Welcome} />
-              <Route exact path="/home"  ><Home img={img}/></Route>
+              <Route exact path="/home"  ><Home /></Route>
               <Route path="/home/:id" component={Image}/>
               
             </Switch>

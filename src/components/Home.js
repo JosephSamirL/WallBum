@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@material-ui/core/Card';
+import SearchBar from "material-ui-search-bar";
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -7,16 +8,16 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-import { ThemeProvider } from '@material-ui/core'
+import ExpandMoreSharpIcon from '@material-ui/icons/ExpandMoreSharp';
+import { Button, ThemeProvider } from '@material-ui/core'
 import "animate.css/animate.min.css";
 import { createMuiTheme } from '@material-ui/core/styles'
 import ScrollAnimation from 'react-animate-on-scroll'
 import {Link} from 'react-router-dom'
 import Navbar from "./Navbar"
-import {useStore} from "../state/state"
-
-
+import {useStore} from "../state/state.js"
+import ImageSearchIcon from '@material-ui/icons/ImageSearch';
+import {useSearch} from "../state/searchState"
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -67,14 +68,16 @@ const dark = {
 
 }
 
-export default function Home({img}) {
+export default function Home() {
   const classes = useStyles();
-  
-  
-const {theme} = useStore()
+    const[key,setKey] = useState("")
+  const {theme,page,setPage,img,anime} = useStore()
+  const{search, setSearch, setImage} = useSearch();
+ const handle = async(inp)=>{
+   await setSearch(inp)
+   
+ }
 
-
-// Icons imported from `@material-ui/icons`
 
 const appliedTheme = createMuiTheme(theme ? light : dark)
 
@@ -95,7 +98,17 @@ const appliedTheme = createMuiTheme(theme ? light : dark)
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
-                
+              
+              <Grid xs={8} item>
+                <SearchBar
+                        value={search} 
+                        onChange={(newValue) => {setKey( newValue)}}  
+                    />
+                </Grid>
+                <Grid  item>
+                  
+                <Button  onClick={()=>{setSearch(key)}} style={{height:"100%"}}><ImageSearchIcon/></Button>
+                </Grid>
               </Grid>
             </div>
           </Container>
@@ -103,25 +116,38 @@ const appliedTheme = createMuiTheme(theme ? light : dark)
         <Container  className={classes.cardGrid} maxWidth="xl">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {img? img.map((item) => (
+          {img? img?.map((item) => (
               
-              <Grid item key={item.url} xs={12} sm={6} md={4}>
-                <ScrollAnimation animateIn="flipInY" animateOut='flipOutY' >
+              <Grid item key={item.id + img.indexOf(item)} xs={12} sm={6} md={4}>
+                {anime?<ScrollAnimation animateIn="flipInY" animateOut='flipOutY' >
                 <Card className={classes.card}>
-                  <Link to={"/home/"+item.name}><CardMedia
+                  <Link onClick={()=>{setImage(img[img.indexOf(item)])}} to={"/home/"+item.id}><CardMedia
                     className={classes.cardMedia}
-                    image= {`https://salty-brook-11628.herokuapp.com/files/${item.name}`}
+                    image= {item?.urls?.small}
                     title="Image title"
                   ></CardMedia></Link>
                  
                  
                 </Card>
-                </ScrollAnimation>
-              </Grid>
+                </ScrollAnimation>:<Card className={classes.card}>
+                  <Link onClick={()=>{setImage(img[img.indexOf(item)])}} to={"/home/"+item.id}><CardMedia
+                    className={classes.cardMedia}
+                    image= {item?.urls?.small}
+                    title="Image title"
+                  ></CardMedia></Link>
+                 
+                 
+                </Card>}
               
-            )): <CircularProgress style={{margin: 'auto'}} color="secondary" />}
+              </Grid>
+               
+            ))   : <CircularProgress style={{margin: 'auto'}} color="secondary" />}
+          
+            <Button onClick={()=>{ setPage(page + 1)}} style={{width:"100%"}}>S H O W  M O R E {search} <ExpandMoreSharpIcon/></Button>
           </Grid>
+          
         </Container>
+       
       </main>
      
     </React.Fragment>

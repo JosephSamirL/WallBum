@@ -1,13 +1,12 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
-import { ThemeProvider } from '@material-ui/core'
+import { Button, ThemeProvider } from '@material-ui/core'
 import Brightness7Icon from '@material-ui/icons/Brightness7'
 import Brightness3Icon from '@material-ui/icons/Brightness3'
 import "animate.css/animate.min.css";
@@ -69,7 +68,7 @@ const dark = {
 export default function Navbar() {
   const classes = useStyles();
  const location = useLocation()
-const {theme, setTheme} = useStore()
+const {theme, setTheme,anime,setAnime} = useStore()
 
 
 
@@ -87,7 +86,11 @@ const appliedTheme = createMuiTheme(theme ? light : dark)
           <Typography variant="h6" color="inherit" noWrap>
           W A L L B U M
           </Typography>
-          <a onClick={()=>setTheme(!theme)} style={{marginLeft:'auto'}}>{theme?<Brightness3Icon/>:<Brightness7Icon />}</a>
+          <div style={{marginLeft:'auto'}}>
+            
+          <Button style={{marginRight:"5px", color:"white"}} onClick={()=>setAnime(!anime)} >{anime?"animeOff":"animeOn"}</Button>
+          <a onClick={()=>setTheme(!theme)} style={{}}>{theme?<Brightness3Icon/>:<Brightness7Icon />}</a>
+          </div>
         </Toolbar>
       </AppBar>
     </React.Fragment>

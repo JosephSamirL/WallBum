@@ -50,7 +50,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           W A L L B U M
         </Typography>
-         <Link to="/home">
+         <Link style={{textDecoration:"none"}} to="/home">
           <Button
            type="button"
             fullWidth
