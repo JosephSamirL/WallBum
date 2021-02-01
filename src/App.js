@@ -26,7 +26,7 @@ function App() {
     async function a(){
       axios.get(`https://api.unsplash.com/search/photos/?page=1&&query=${search}`, {
         headers: {
-          Authorization: 'Client-ID '+'AcV32JsGG4T0ovNLHiiTcL0eb8MNOd2rzV2zEQFdDSk'
+          Authorization: 'Client-ID '+'UNSPLASH API'
         }
        }).then(res=>{setImg(res.data.results)})
 
